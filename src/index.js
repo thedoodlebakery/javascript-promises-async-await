@@ -1,7 +1,7 @@
 import {fetchWithTimeout, fetchMovies, fetchBooks, asyncFetchBooks, asyncFetchMovies} from './services';
 const movies = require ('./data/movies.json');
 
-const getBooksAndMovies = () => {
+function getBooksAndMovies(){
     return Promise.all(
         [fetchBooks(), fetchMovies()]
     ).then(([books, movies]) => ({
@@ -16,7 +16,7 @@ getBooksAndMoviesPromise.then(results => {
     console.log('getBooksAndMoviesPromise', results)
 });
 
-const getBooksOrMovies = () => {
+function getBooksOrMovies() {
     return Promise.race([fetchBooks(), fetchMovies()])
     .then(results => results)
     .catch(error => {
