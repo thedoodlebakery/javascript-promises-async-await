@@ -1,4 +1,4 @@
-import {fetchWithTimeout, fetchMovies, fetchBooks, asyncFetchBooks, asyncFetchMovies} from './services';
+import {fetchWithTimeout, fetchMovies, fetchBooks, asyncFetchBookss, asyncFetchMovies} from './services';
 const movies = require ('./data/movies.json');
 
 function getBooksAndMovies(){
@@ -30,10 +30,11 @@ getBooksOrMoviesPromise.then(results => {
 
 async function getBooksAndMoviesAsync(){
     try {
-        const [books, movies] = await Promise.all([asyncFetchBooks(), asyncFetchMovies()]);
+        const [books, movies] = await Promise.all([asyncFetchBookss(), asyncFetchMovies()]);
         return { books, movies };
     } catch (error) {
         console.log("Error fetching books and movies", error);
+        return error;
     }
 }
 
@@ -49,7 +50,9 @@ getBooksAndMoviesAsync()
             books: results.books
         });
     })
-    .catch(error => {console.log("Error in getBooksAndMoviesAsync execution", error)});
+    .catch(error => {
+        console.error("Error in getBooksAndMoviesAsync execution", error);
+    });
 
 
 getBooksOrMoviesAsync()
